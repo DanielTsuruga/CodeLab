@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Candidatos</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+    <main>
+
+        <h1>Lista de Candidatos</h1>
+
+        <form action="/candidatos/filtro" method="get">
+            <input type="text" name="busca" placeholder="Nome ou cargo">
+            <button type="submit">Filtrar</button>
+        </form>
+        <!-- Envia a busca para o endpoint /candidatos/filtro -->
+
+        <div class="lista">
+
+            <div class="card" th:each="candidato : ${candidatos}">
+                <!-- th:each percorre a lista recebida pelo Controller -->
+
+                <h2 th:text="${candidato.nome}">Nome</h2>
+                <!-- th:text coloca o valor do atributo no HTML -->
+
+                <p>
+                    Cargo:
+                    <span th:text="${candidato.cargo}">Cargo</span>
+                </p>
+
+                <p>
+                    Idade:
+                    <span th:text="${candidato.idade}">Idade</span>
+                </p>
+
+            </div>
+
+        </div>
+
+    </main>
+</body>
+
+</html>
