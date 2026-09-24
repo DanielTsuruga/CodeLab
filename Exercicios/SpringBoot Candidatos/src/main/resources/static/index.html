@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <title>Lista de Candidatos</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main>
+
+        <h2>Cadastrar candidato</h2>
+
+        <input type="text" id="nome" placeholder="Nome">
+        <input type="text" id="cargo" placeholder="Cargo">
+        <input type="number" id="idade" placeholder="Idade">
+
+        <button onclick="cadastrarCandidato()">
+            Cadastrar
+        </button>
+
+        <h1>Lista de Candidatos</h1>
+
+        <button onclick="carregarCandidatos()">
+            Carregar candidatos
+        </button>
+        <!-- Chama a função carregarCandidatos() quando clicar -->
+
+
+        <input
+            type="text"
+            id="campo-busca"
+            placeholder="Digite o nome ou cargo"
+        >
+        <!-- Campo usado para fazer a busca -->
+
+
+        <button onclick="filtrarCandidatos()">
+            Filtrar
+        </button>
+        <!-- Chama a função que faz o filtro -->
+
+
+        <div id="lista-candidatos"></div>
+        <!-- Local onde os candidatos serão mostrados -->
+
+
+    </main>
+
+
+    <script>
+
+        let candidatos = [];
+        // Guarda os candidatos recebidos da API
+
+
+        function carregarCandidatos() {
+
+            fetch("/candidatos")
+            // Faz uma requisição GET para o Controller
+
+                .then(response => response.json())
+                // Converte a resposta para JSON
+
+                .then(dados => {
+
+                    candidatos = dados;
+                    // Guarda os dados recebidos na lista
+
+                    mostrarCandidatos(candidatos);
+                    // Mostra os candidatos na tela
+                });
+        }
+
+
+        function filtrarCandidatos() {
+
+            const busca = document
+                .getElementById("campo-busca")
+                .value
+                .toLowerCase();
+            // Pega o texto digitado no input
+
+
+            const resultado = candidatos.filter(candidato => {
+                // Cria uma nova lista com os candidatos que combinam
+
+                return candidato.nome.toLowerCase().includes(busca)
+                    || candidato.cargo.toLowerCase().includes(busca);
+
+                // Verifica se o nome OU o cargo contém o texto pesquisado
+            });
+
+
+            mostrarCandidatos(resultado);
+            // Mostra somente os resultados do filtro
+        }
+
+
+        function mostrarCandidatos(lista) {
+
+            const elemento = document.getElementById("lista-candidatos");
+            // Pega a div onde os candidatos serão exibidos
+
+
+            elemento.innerHTML = "";
+            // Limpa a lista antes de mostrar os novos resultados
+
+
+            lista.forEach(candidato => {
+                // Percorre cada candidato da lista
+
+                elemento.innerHTML += `
+                    <div class="card">
+
+                        <h2>${candidato.nome}</h2>
+
+                        <p>${candidato.cargo}</p>
+
+                        <p>${candidato.idade} anos</p>
+
+                    </div>
+                `;
+                // Adiciona o candidato na página
+            });
+        }
+
+        function cadastrarCandidato() {
+
+            const candidato = {
+                nome: document.getElementById("nome").value,
+                cargo: document.getElementById("cargo").value,
+                idade: Number(document.getElementById("idade").value)
+            };
+            // Monta um objeto com os dados preenchidos
+
+
+            fetch("/candidatos", {
+                method: "POST",
+                // Define que a requisição será POST
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                // Informa que estamos enviando JSON
+
+                body: JSON.stringify(candidato)
+                // Converte o objeto JavaScript para JSON
+            })
+            .then(response => response.json())
+            .then(dados => {
+
+                console.log(dados);
+                // Mostra a resposta no console
+
+                carregarCandidatos();
+        // Atualiza a lista depois do cadastro
+        });
+}
+
+    </script>
+</body>
+</html>
