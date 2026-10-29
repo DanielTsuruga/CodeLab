@@ -103,24 +103,4 @@ setTarefas((listaAtual) =>
 
 O efeito grava as tarefas sempre que o estado `tarefas` muda. O `localStorage` é armazenamento local do navegador; não é um banco de dados compartilhado nem uma API.
 
-## Exercícios para praticar
 
-Tente implementar sem olhar a solução imediatamente:
-
-1. Adicionar um botão para apagar todas as tarefas concluídas.
-2. Mostrar uma mensagem diferente quando todas as tarefas estiverem concluídas.
-3. Adicionar um filtro para mostrar apenas tarefas de prioridade alta.
-4. Impedir que duas tarefas com o mesmo título sejam cadastradas.
-5. Adicionar um contador de caracteres na descrição.
-6. Ordenar as tarefas por prioridade.
-7. Separar a confirmação de exclusão em um componente próprio.
-8. Alterar as cores e o layout sem mexer na lógica.
-9. Criar uma nova categoria chamada “Disciplina”.
-10. Explicar em voz alta como `App` passa funções para `TaskForm` e `TaskList`.
-
-## Observações
-
-- Os comentários são didáticos; em projetos reais, prefira comentários que expliquem decisões ou lógica não óbvia.
-- Este projeto usa `localStorage`, não servidor nem banco de dados.
-- O ID com `Date.now()` é suficiente para este exercício local, mas aplicações reais podem usar IDs gerados pelo backend ou `crypto.randomUUID()`.
-- Use o projeto como referência para aprender e adaptar os padrões ao enunciado, não apenas como código para copiar.
